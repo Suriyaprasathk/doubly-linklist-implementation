@@ -1,0 +1,180 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+    int data;
+    struct node *next;
+    struct node *prev;
+};
+struct node *head,*tail,*newnode,*temp;
+void create()
+{
+    int choice;
+    head=0;
+    while(choice)
+    {
+        newnode=(struct node*)malloc(sizeof(struct node));
+        printf("enter the data");
+        scanf("%d",&newnode->data);
+        newnode->next=0;
+        newnode->prev=0;
+        if(head==0)
+        {
+            head=tail=temp=newnode;
+        }
+        else
+        {
+            tail->next=newnode;
+            newnode->prev=tail;
+            tail=newnode;
+        }
+    printf("\nenter the choice 0 to quit 1 to continue:\n");
+    scanf("%d",&choice);
+        
+    }
+}
+void insert_at_beginning()
+{
+    newnode=(struct node*)malloc(sizeof(struct node));
+    printf("enter the data");
+    scanf("%d",&newnode->data);
+    newnode->next=0;
+    newnode->prev=0;
+    newnode->next=head;
+    newnode->prev=newnode;
+    head=newnode;
+    
+}
+void insert_at_end()
+{
+    newnode=(struct node*)malloc(sizeof(struct node));
+    printf("enter the data");
+    scanf("%d",&newnode->data);
+    newnode->next=0;
+    newnode->prev=0;
+    tail->next=newnode;
+    newnode->prev=tail;
+    tail=newnode;
+}
+void insert_at_specific_position()
+{
+    int pos,i=1;
+    printf("enter the position");
+    scanf("%d",&pos);
+    temp=head;
+    newnode=(struct node*)malloc(sizeof(struct node));
+    printf("enter the data");
+    scanf("%d",&newnode->data);
+    newnode->next=0;
+    newnode->prev=0;
+    while(i<pos-1)
+    {
+        temp=temp->next;
+        i++;
+    }
+    newnode->next=temp->next;
+    newnode->prev=temp;
+    temp->next=newnode;
+    newnode->next->prev=newnode;
+}
+void delete_at_beginning()
+{
+    temp=head;
+    head=head->next;
+    head->prev=0;
+    free(temp);
+    
+}
+void delete_at_end()
+{
+    temp=tail;
+    tail->prev->next=0;
+    tail=tail->prev;
+    free(temp);
+    
+}
+void delete_at_specific_position()
+{
+    struct node *nextnode;
+    int i=1,pos;
+    printf("enter the position");
+    scanf("%d",&pos);
+    temp=head;
+    while(i<pos)
+    {
+        temp=temp->next;
+        i++;
+    }
+    temp->prev->next=temp->next;
+    temp->next->prev=temp->prev;
+    free(temp);
+    
+}
+void display()
+{
+    temp=head;
+    while(temp!=0)
+    {
+        printf("%d\t",temp->data);
+        temp=temp->next;
+    }
+}
+void search()
+{
+    int x,count=1;
+    printf("enter the value to search:\n");
+    scanf("%d",&x);
+    temp=head;
+    while(temp!=0){
+    if(x==temp->data){
+        printf("the value %d is in  location %d",x,count);
+    }
+    count+=1;
+    temp=temp->next;
+    }
+}
+int main()
+{
+    int choice;
+    while (choice != 10)
+    {
+        printf("\npress 1 to create\npress 2 to insert at beginning\npress 3 to insert at end\npress 4 to insert at specific position\npress 5 to display\npress 6 to delete at beginning\npress 7 to delete at last\npress 8 to delete at specific positiom\npress 9 to search\npress 10 to quit\n");
+        printf("enter the choice");
+        scanf("%d", &choice);
+        switch (choice)
+        {
+        case 1:
+            create();
+            break;
+        case 2:
+            insert_at_beginning();
+            break;
+        case 3:
+            insert_at_end();
+            break;
+        case 4:
+            insert_at_specific_position();
+            break;
+        case 5:
+            display();
+            break;
+        case 6:
+            delete_at_beginning();
+            break;
+        case 7:
+            delete_at_end();
+            break;
+        case 8:
+            delete_at_specific_position();
+            break;
+        case 9:
+            search();
+            break;
+        case 10:
+            return choice = 0;
+            break;
+        default:
+            printf("invalid input");
+            break;
+        }
+    }
+}
